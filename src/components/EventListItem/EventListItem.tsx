@@ -25,28 +25,37 @@ const EventListItem: React.FC<EventListItemProps> = ({
   };
 
   return (
-    <>
-      <Accordion title={event.name} onOpen={handleOpen}>
-        <div>Suitable Dates</div>
-        {isFetching ? (
-          <Loader />
-        ) : (
-          <>
-            {data?.suitableDates.map((suitableDate) => {
-              return (
-                <div key={suitableDate.date}>
-                  <div>{suitableDate.date}</div>
-                  <div>{suitableDate.people.join(", ")}</div>
+    <Accordion title={event.name} onOpen={handleOpen} className="mt-4">
+      <div className="text-gray-700 font-semibold">Suitable Dates</div>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <>
+          {data?.suitableDates.map((suitableDate) => {
+            return (
+              <div
+                key={suitableDate.date}
+                className="mt-2 p-2 border rounded-lg bg-gray-50"
+              >
+                <div className="font-medium text-blue-600">
+                  {suitableDate.date}
                 </div>
-              );
-            })}
-            <Button size="small" onClick={viewMoreClickHandler}>
-              View More
-            </Button>
-          </>
-        )}
-      </Accordion>
-    </>
+                <div className="text-gray-500">
+                  {suitableDate.people.join(", ")}
+                </div>
+              </div>
+            );
+          })}
+          <Button
+            size="small"
+            onClick={viewMoreClickHandler}
+            className="mt-4 text-sm"
+          >
+            View More
+          </Button>
+        </>
+      )}
+    </Accordion>
   );
 };
 

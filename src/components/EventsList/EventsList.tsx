@@ -9,7 +9,7 @@ const EventsList: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className="space-y-4 p-4 bg-white rounded-lg shadow-md">
       {events.map((event) => (
         <EventListItem event={event} key={event._id} />
       ))}
