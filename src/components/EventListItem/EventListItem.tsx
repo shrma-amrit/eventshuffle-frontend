@@ -5,7 +5,7 @@ import { Accordion } from "../common/Accordion";
 import { EVENTS_VIEW_PATH } from "../../utils/constants";
 import { Button } from "../common/Button";
 import { Loader } from "../common/Loader";
-import { Avatar } from "../common/Avatar";
+import { DateRow } from "../DateRow";
 
 interface EventListItemProps {
   event: EventListItemResp;
@@ -22,7 +22,7 @@ const EventListItem: React.FC<EventListItemProps> = ({
   };
 
   const viewMoreClickHandler = () => {
-    navigate(`/${EVENTS_VIEW_PATH.replace(":id", event._id)}`);
+    navigate(`/${EVENTS_VIEW_PATH.replace(":eventId", event._id)}`);
   };
 
   return (
@@ -39,19 +39,11 @@ const EventListItem: React.FC<EventListItemProps> = ({
         <>
           {data?.suitableDates.length ? (
             data.suitableDates.map((suitableDate) => (
-              <div
+              <DateRow
                 key={suitableDate.date}
-                className="flex items-center mt-2 p-2 border rounded-lg bg-gray-50"
-              >
-                <div className="font-medium text-blue-600 flex-shrink-0">
-                  {suitableDate.date}
-                </div>
-                <div className="flex items-center ml-4 space-x-2 text-gray-500">
-                  {suitableDate.people.map((person) => (
-                    <Avatar name={person} key={person} />
-                  ))}
-                </div>
-              </div>
+                date={suitableDate.date}
+                people={suitableDate.people}
+              />
             ))
           ) : (
             <div className="text-gray-500 mt-2">
