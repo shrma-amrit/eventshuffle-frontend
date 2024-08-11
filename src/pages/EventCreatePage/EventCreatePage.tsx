@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EVENTS_PATH } from "../../utils/constants";
 import { useCreateEventMutation } from "../../features/manageEvents/manageEventsApi";
-import { generateRandomId } from "../../utils/utils";
+import { Input } from "../../components/common/InputFloatingLabel";
+import { DateInputList } from "../../components/DateInputList";
 import { Button } from "../../components/common/Button";
+import { generateRandomId } from "../../utils/utils";
 
-function EventCreatePage() {
+const EventCreatePage: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [dates, setDates] = useState<{ id: string; value: string }[]>([]);
+  const [dates, setDates] = useState<{ id: string; value: string }[]>([
+    { id: generateRandomId(), value: "" },
+  ]);
   const navigate = useNavigate();
 
   const [createEvent, { isLoading, isSuccess }] = useCreateEventMutation();
@@ -19,42 +23,14 @@ function EventCreatePage() {
   }, [isSuccess, navigate]);
 
   return (
-    <div>
-      <input
-        name="Name"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter name"
-      />
-      <div>Dates</div>
-      {dates.map((date, index) => {
-        return (
-          <div key={date.id}>
-            <input
-              type="text"
-              value={date.value}
-              onChange={(e) =>
-                setDates((prev) => {
-                  const dates = [...prev];
-                  dates[index].value = e.target.value;
-                  return dates;
-                })
-              }
-              placeholder="Enter date"
-            />
-          </div>
-        );
-      })}
-      <Button
-        onClick={() =>
-          setDates((prev) => [...prev, { id: generateRandomId(), value: "" }])
-        }
-      >
-        Add new date
-      </Button>
-      <div>
-        <Button onClick={() => navigate(`/${EVENTS_PATH}`)}>Cancel</Button>
+    <div className="m-8 max-w-lg mx-auto">
+      <h4 className="text-lg font-semibold mb-4">Create New Event</h4>
+      <Input label="Event Name" value={name} onChange={setName} />
+      <DateInputList dates={dates} setDates={setDates} />
+      <div className="flex justify-end gap-4 mt-4">
+        <Button variant="secondary" onClick={() => navigate(`/${EVENTS_PATH}`)}>
+          Cancel
+        </Button>
         <Button
           onClick={() =>
             createEvent({
@@ -76,6 +52,6 @@ function EventCreatePage() {
       </div>
     </div>
   );
-}
+};
 
 export default EventCreatePage;

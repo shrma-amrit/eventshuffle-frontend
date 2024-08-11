@@ -20,9 +20,18 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, className }) => {
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const tooltipRect = tooltipRef.current.getBoundingClientRect();
 
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
+
       setPosition({
-        top: triggerRect.bottom + arrowSize,
-        left: triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2,
+        top: triggerRect.bottom + scrollTop + arrowSize,
+        left:
+          triggerRect.left +
+          scrollLeft +
+          triggerRect.width / 2 -
+          tooltipRect.width / 2,
       });
     }
   };

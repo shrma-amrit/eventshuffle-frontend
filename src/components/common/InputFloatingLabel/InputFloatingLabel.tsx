@@ -4,9 +4,11 @@ interface InputProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  type?: "text" | "date";
 }
 
 const InputFloatingLabel: React.FC<InputProps> = ({
+  type = "text",
   label,
   value,
   onChange,
@@ -14,7 +16,7 @@ const InputFloatingLabel: React.FC<InputProps> = ({
   return (
     <div className="relative">
       <input
-        type="text"
+        type={type}
         id="floating_outlined"
         className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
