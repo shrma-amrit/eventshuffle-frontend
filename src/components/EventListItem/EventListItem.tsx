@@ -34,7 +34,7 @@ const EventListItem: React.FC<EventListItemProps> = ({
         </Button>
       </div>
       {isFetching ? (
-        <Loader />
+        <Loader fullScreen />
       ) : (
         <>
           {data?.suitableDates.length ? (
